@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 
 public class Player extends Actor {
     public Player(Cell cell) {
-        super(cell, 11);
+        super(cell, 12);
     }
 
     public String getTileName() {
