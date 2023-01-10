@@ -12,12 +12,10 @@ public class Player extends Actor {
         return "player";
     }
 
-    public void move(int dx, int dy) {
+    public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType() != CellType.WALL) {
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
+        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+            move(dx, dy);
         }
     }
 
