@@ -22,7 +22,7 @@ public class Main extends Application {
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
-    Label healthLabel = new Label();
+    Label playerHealthLabel = new Label();
     Label skelteonHealthLabel = new Label();
 
     public static void main(String[] args) {
@@ -35,10 +35,11 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        ui.add(new Label("Health: "), 0, 0);
+        ui.add(new Label("PLayer Health: "), 0, 0);
         ui.add(new Label("Skeleton Health: "), 0, 1);
-        ui.add(healthLabel, 1, 0);
+        ui.add(playerHealthLabel, 1, 0);
         ui.add(skelteonHealthLabel, 1, 1);
+
 
         BorderPane borderPane = new BorderPane();
 
@@ -81,7 +82,7 @@ public class Main extends Application {
                 Tiles.drawTile(context, cell, x, y);
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+        playerHealthLabel.setText("" + map.getPlayer().getHealth());
         skelteonHealthLabel.setText("" + map.getSkeleton().getHealth());
     }
 }

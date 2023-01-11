@@ -12,11 +12,30 @@ public class Player extends Actor {
         return "player";
     }
 
-    public void attemptMove(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
-            move(dx, dy);
-        }
+    public void PlayerDecreaseHealth(int decrease) {
+        int health = getHealth();
+        health -= decrease;
+        setHealth(health);
     }
 
+
+
+    public void attemptMove(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
+            System.out.println("enemy");
+            PlayerDecreaseHealth(2);
+            SkeletonDecreaseHealth(5);
+
+        }
+        else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+            move(dx, dy);
+
+        }
+    }
+    public void SkeletonDecreaseHealth(int decrease) {
+        int health = getHealth();
+        health -= decrease;
+        setHealth(health);
+    }
 }
