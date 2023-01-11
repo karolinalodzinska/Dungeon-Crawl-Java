@@ -15,6 +15,9 @@ public abstract class Actor implements Drawable {
         this.health = getHealth();
         this.strength = getStrength();
     }
+    public void decreaseHealth(int decrease){
+        this.health =- decrease;
+    }
 
     public int getHealth(int health) {
         return this.health;

@@ -12,8 +12,9 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
-    public void SkeletonDecreaseHealth(int decrease) {
-        int health = getHealth();
+    @Override
+    public void decreaseHealth(int decrease){
+        int  health = getHealth();
         health -= decrease;
         setHealth(health);
     }

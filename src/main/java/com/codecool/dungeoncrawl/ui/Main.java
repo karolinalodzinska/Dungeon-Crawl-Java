@@ -17,8 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-//import static com.codecool.dungeoncrawl.logic.actors.Player.HEALTH;
-
 public class Main extends Application {
     GameMap map = new MapLoader().loadMap();
     Canvas canvas = new Canvas(
@@ -27,7 +25,6 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
     Label skelteonHealthLabel = new Label();
-    Label healthLabel = new Label();
     Label attackStrengthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
 
@@ -48,8 +45,6 @@ public class Main extends Application {
         ui.add(playerHealthLabel, 1, 0);
         ui.add(skelteonHealthLabel, 1, 1);
 
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
         ui.add(new Label("  "), 0, 2);
         ui.add(new Label("Attack Strength: "), 0, 3);
         ui.add(attackStrengthLabel, 1, 3);
@@ -107,7 +102,6 @@ public class Main extends Application {
                 Tiles.drawTile(context, cell, x, y);
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
         playerInventory.setText(map.getPlayer().displayInventory());
         playerHealthLabel.setText("" + map.getPlayer().getHealth());
         skelteonHealthLabel.setText("" + map.getSkeleton().getHealth());
