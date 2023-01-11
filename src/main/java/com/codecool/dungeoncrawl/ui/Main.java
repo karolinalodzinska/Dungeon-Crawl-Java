@@ -25,6 +25,7 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
     Label skelteonHealthLabel = new Label();
+    Label skelteonHealthLabe1 = new Label();
     Label attackStrengthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
 
@@ -42,8 +43,10 @@ public class Main extends Application {
 
         ui.add(new Label("PLayer Health: "), 0, 0);
         ui.add(new Label("Skeleton Health: "), 0, 1);
+        ui.add(new Label("Skeleton Health: "), 0, 2);
         ui.add(playerHealthLabel, 1, 0);
         ui.add(skelteonHealthLabel, 1, 1);
+        ui.add(skelteonHealthLabe1, 1, 2);
 
         ui.add(new Label("  "), 0, 2);
         ui.add(new Label("Attack Strength: "), 0, 3);
@@ -87,7 +90,7 @@ public class Main extends Application {
                 map.getPlayer().attemptMove(-1, 0);
                 break;
             case RIGHT:
-                map.getPlayer().attemptMove(1,0);
+                map.getPlayer().attemptMove(1, 0);
                 break;
         }
         refresh();
@@ -103,7 +106,11 @@ public class Main extends Application {
             }
         }
         playerInventory.setText(map.getPlayer().displayInventory());
+        attackStrengthLabel.setText("" + map.getPlayer().getStrength());
         playerHealthLabel.setText("" + map.getPlayer().getHealth());
-        skelteonHealthLabel.setText("" + map.getSkeleton().getHealth());
+        skelteonHealthLabel.setText("" + map.getCell(1, 1).getActor().getHealth());
+        skelteonHealthLabe1.setText("" + map.getCell(1, 2).getActor().getHealth());
+//        if (map.getCell(1, 1).getActor() == null) skelteonHealthLabel.setText("dead");
+//        if (map.getCell(1, 1).getActor() == null) map.getCell(1,1 ).deleteActor();
     }
 }

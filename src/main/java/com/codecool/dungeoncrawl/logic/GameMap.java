@@ -26,6 +26,9 @@ public class GameMap {
     public Cell getCell(int x, int y) {
         return cells[x][y];
     }
+    public void deleteSketeton(){
+        this.skeleton = null;
+    }
 
     public void setPlayer(Player player) {
         this.player = player;

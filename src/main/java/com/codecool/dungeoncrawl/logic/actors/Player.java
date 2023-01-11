@@ -33,15 +33,14 @@ public class Player extends Actor {
     }
 
 
+
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        //Cell nextCell2 = cell.getNeighbor(dx, dy);
 
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            System.out.println("enemy");
             decreaseHealth(4);
             nextCell.getActor().decreaseHealth(this.getStrength());
-            nextCell.deleteActor();
+           nextCell.deleteActor();
             Cell cell = getCell();
             cell.deleteActor();
 
