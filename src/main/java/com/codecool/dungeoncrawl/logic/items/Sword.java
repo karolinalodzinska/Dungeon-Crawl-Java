@@ -10,7 +10,7 @@ public class Sword extends Item{
 
     @Override
     public String getTileName() {
-        return "Sword";
+        return "sword";
     }
 
 }

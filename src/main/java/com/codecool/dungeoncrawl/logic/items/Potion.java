@@ -9,7 +9,7 @@ public class Potion extends Item {
 
     @Override
     public String getTileName() {
-        return "Potion";
+        return "potion";
     }
 
 }

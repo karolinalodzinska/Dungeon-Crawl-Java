@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.Health;
 import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.Potion;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 
 import java.io.InputStream;
@@ -44,7 +45,7 @@ public class MapLoader {
                             break;
                         case 'h':
                             cell.setType(CellType.FLOOR);
-                            new Health(cell);
+                            new Potion(cell);
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
