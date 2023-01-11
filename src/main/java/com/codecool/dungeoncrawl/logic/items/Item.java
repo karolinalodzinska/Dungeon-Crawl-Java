@@ -9,7 +9,7 @@ public class Item {
     private final int strength;
     private boolean isPickedUp;
     public boolean isPickedUp() {
-        return isPickedUp();
+        return isPickedUp;
     }
 
     public void setPickedUp(boolean pickedUp) {
