@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.items;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Item {
+public abstract class Item {
 
     private Cell cell;
 
@@ -18,4 +18,12 @@ public class Item {
     public void setCell(Cell cell) {
         this.cell = cell;
     }
+
+
+
+    public String getTileName(){
+        return "Item";
+    }
+
+
 }
