@@ -25,6 +25,8 @@ public class Main extends Application {
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
+    Label playerHealthLabel = new Label();
+    Label skelteonHealthLabel = new Label();
     Label healthLabel = new Label();
     Label attackStrengthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
@@ -40,6 +42,11 @@ public class Main extends Application {
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
+
+        ui.add(new Label("PLayer Health: "), 0, 0);
+        ui.add(new Label("Skeleton Health: "), 0, 1);
+        ui.add(playerHealthLabel, 1, 0);
+        ui.add(skelteonHealthLabel, 1, 1);
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
@@ -102,9 +109,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         playerInventory.setText(map.getPlayer().displayInventory());
+        playerHealthLabel.setText("" + map.getPlayer().getHealth());
+        skelteonHealthLabel.setText("" + map.getSkeleton().getHealth());
     }
-
-//    playerInventory.setText("");
-//            playerInventory.setText(map.getPlayer().displayInventory());
-
 }

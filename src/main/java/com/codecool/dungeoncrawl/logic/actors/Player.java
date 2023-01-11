@@ -14,8 +14,9 @@ public class Player extends Actor {
 
     private ArrayList<Item> inventory;
     public static final int STRENGTH = 5;
-    public static final int HEALTH = 10;
+   // public static final int HEALTH = 10;
     public Player(Cell cell) {
+        super(cell, 12);
         super(cell);
         this.setHealth(HEALTH);
         this.setStrength(STRENGTH);
@@ -26,9 +27,23 @@ public class Player extends Actor {
         return "player";
     }
 
+    public void PlayerDecreaseHealth(int decrease) {
+        int health = getHealth();
+        health -= decrease;
+        setHealth(health);
+    }
+
+
+
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
+            System.out.println("enemy");
+            PlayerDecreaseHealth(2);
+           // SkeletonDecreaseHealth(5);
+
+        }
+        else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
             move(dx, dy);
         }
     }

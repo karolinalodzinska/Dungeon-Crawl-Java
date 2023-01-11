@@ -4,11 +4,17 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Skeleton extends Actor {
     public Skeleton(Cell cell) {
-        super(cell);
+        super(cell, 5);
     }
 
     @Override
     public String getTileName() {
         return "skeleton";
+    }
+
+    public void SkeletonDecreaseHealth(int decrease) {
+        int health = getHealth();
+        health -= decrease;
+        setHealth(health);
     }
 }
