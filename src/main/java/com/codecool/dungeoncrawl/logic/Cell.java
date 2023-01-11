@@ -47,8 +47,13 @@ public class Cell implements Drawable {
 
     @Override
     public String getTileName() {
-
-        return actor != null ? actor.getTileName() : type.getTileName();
+        if (actor != null) {
+            return actor.getTileName();
+        } else if (item != null) {
+            return item.getTileName();
+        } else {
+            return type.getTileName();
+        }
     }
 
     public int getX() {
