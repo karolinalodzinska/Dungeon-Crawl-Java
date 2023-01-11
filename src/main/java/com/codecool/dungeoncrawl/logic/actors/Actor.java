@@ -5,15 +5,18 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
     Cell cell;
-
     private int strength;
-    private final int health;
+    private int health;
 
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
         this.health = getHealth();
         this.strength = getStrength();
+    }
+
+    public int getHealth(int health) {
+        return this.health;
     }
 
     public void move(int dx, int dy) {
@@ -28,6 +31,10 @@ public abstract class Actor implements Drawable {
     }
 
     public int getStrength() { return strength;}
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
     public Cell getCell() {
         return cell;

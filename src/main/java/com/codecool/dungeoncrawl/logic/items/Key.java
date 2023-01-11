@@ -8,4 +8,8 @@ public class Key extends Item{
         super(cell);
     }
 
+    public String getTileName(){
+        return "Key";
+    }
+
 }

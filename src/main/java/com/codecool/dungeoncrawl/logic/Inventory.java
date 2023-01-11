@@ -30,29 +30,6 @@ public class Inventory {
         }
     }
 
-    public void pickUpPotion(Player player, Item item) {
-        item.pickUp(this);
-        player.setStrength(player.getStrength() + item.getStrength());
-    }
-
-    public void pickUpItem(Item item) {
-        if (!item.isPickedUp()){
-            inventory.add(item);
-            item.setPickedUp(true);
-            updateItems();
-        }
-    }
-
-    public void pickUpKey(Key key) {
-        pickUpItem(key);
-        this.hasKey = true;
-    }
-
-    public void pickUpSword(Sword sword) {
-        pickUpItem(sword);
-        this.hasSword = true;
-    }
-
     public boolean hasSword(){
         return hasSword;
     }
