@@ -12,4 +12,9 @@ public class Skeleton extends Actor {
         return "skeleton";
     }
 
+    public void SkeletonDecreaseHealth(int decrease) {
+        int health = getHealth();
+        health -= decrease;
+        setHealth(health);
+    }
 }

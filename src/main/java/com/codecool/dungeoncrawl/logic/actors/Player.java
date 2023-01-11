@@ -25,7 +25,7 @@ public class Player extends Actor {
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
             System.out.println("enemy");
             PlayerDecreaseHealth(2);
-            SkeletonDecreaseHealth(5);
+           // SkeletonDecreaseHealth(5);
 
         }
         else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
@@ -33,9 +33,5 @@ public class Player extends Actor {
 
         }
     }
-    public void SkeletonDecreaseHealth(int decrease) {
-        int health = getHealth();
-        health -= decrease;
-        setHealth(health);
-    }
+
 }
