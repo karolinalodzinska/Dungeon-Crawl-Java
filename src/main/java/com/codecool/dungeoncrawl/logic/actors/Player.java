@@ -17,8 +17,8 @@ public class Player extends Actor {
    // public static final int HEALTH = 10;
     public Player(Cell cell) {
         super(cell, 12);
-        super(cell);
-        this.setHealth(HEALTH);
+       // super(cell);
+       // this.setHealth(HEALTH);
         this.setStrength(STRENGTH);
         this.inventory = new ArrayList<>();
     }

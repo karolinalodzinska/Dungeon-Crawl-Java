@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import static com.codecool.dungeoncrawl.logic.actors.Player.HEALTH;
+//import static com.codecool.dungeoncrawl.logic.actors.Player.HEALTH;
 
 public class Main extends Application {
     GameMap map = new MapLoader().loadMap();
