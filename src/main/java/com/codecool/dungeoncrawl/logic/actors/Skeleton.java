@@ -12,6 +12,11 @@ public class Skeleton extends Actor {
     }
 
     @Override
+    public int getStrength() {
+        return STRENGTH;
+    }
+
+    @Override
     public String getTileName() {
         return "skeleton";
     }

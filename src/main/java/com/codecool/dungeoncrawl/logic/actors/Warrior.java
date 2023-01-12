@@ -11,6 +11,11 @@ public class Warrior extends Actor {
         super(cell, HEALTH);
     }
 
+    @Override
+    public int getStrength() {
+        return STRENGTH;
+    }
+
     public String getTileName() {
         return "warrior";
     }

@@ -48,9 +48,9 @@ public class Player extends Actor {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            decreaseHealth(4);
+            decreaseHealth(nextCell.getActor().getStrength());
             nextCell.getActor().decreaseHealth(this.getStrength());
-           nextCell.deleteActor();
+            nextCell.deleteActor();
             Cell cell = getCell();
             cell.deleteActor();
 
@@ -59,6 +59,8 @@ public class Player extends Actor {
             move(dx, dy);
         }
     }
+
+
 
     public void addToInventory(Item item) {
         inventory.add(item);
