@@ -6,7 +6,7 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-
+    Cell center;
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -26,7 +26,32 @@ public class GameMap {
 
     public void setPlayer(Player player) {
         this.player = player;
+        centerPosition();
     }
+
+    public void centerPosition(){
+        int centerX;
+        int centerY;
+
+        if (player.getCell().getX() <= 10) {
+            centerX = 10;
+        } else {
+            centerX = Math.min(player.getCell().getX(), width - 10);
+        }
+
+        if (player.getCell().getY() <= 10) {
+            centerY = 10;
+        } else {
+            centerY = Math.min(player.getCell().getY(), height - 10);
+        }
+
+        center = cells[centerX][centerY];
+    }
+
+    public Cell getCenterCell() {
+        return center;
+    }
+
 
     public Player getPlayer() {
         return player;
@@ -39,4 +64,5 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
 }
