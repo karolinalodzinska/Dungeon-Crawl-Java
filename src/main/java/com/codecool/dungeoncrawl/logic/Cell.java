@@ -87,4 +87,8 @@ public class Cell implements Drawable {
     public Door getDoor(){
         return door;
     }
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
 }

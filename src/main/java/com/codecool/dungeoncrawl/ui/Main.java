@@ -19,10 +19,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    final int CANVAS_WIDTH = 20;
+    final int CANVAS_HEIGHT = 20;
     GameMap map = new MapLoader().loadMap();
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            CANVAS_WIDTH * Tiles.TILE_WIDTH,
+            CANVAS_HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
     Label skelteonHealthLabel = new Label();
@@ -91,16 +94,30 @@ public class Main extends Application {
                 map.getPlayer().attemptMove(1, 0);
                 break;
         }
+
+        map.centerPosition();
         refresh();
     }
 
     public void refresh() {
+    private void refresh() {
+
+        int minX = map.getCenterCell().getX() - CANVAS_WIDTH/2;
+        int minY = map.getCenterCell().getY() - CANVAS_HEIGHT/2;
+        int maxX = map.getCenterCell().getX() + CANVAS_WIDTH/2;
+        int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT/2;
+
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
+
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
                 Cell cell = map.getCell(x, y);
-                Tiles.drawTile(context, cell, x, y);
+                if (cell.getActor() != null) {
+                    Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
+                } else {
+                    Tiles.drawTile(context, cell, x - minX, y - minY);
+                }
             }
         }
         playerInventory.setText(map.getPlayer().displayInventory());

@@ -25,6 +25,7 @@ import java.util.HashMap;
 public class Player extends Actor {
 
     private ArrayList<Item> inventory;
+    private boolean changeMap = false;
     public static final int STRENGTH = 3;
     public static final int HEALTH  = 10;
     public Player(Cell cell) {
@@ -45,6 +46,14 @@ public class Player extends Actor {
     }
 
 
+
+    public boolean getChangeMap() {
+        return changeMap;
+    }
+
+    public void setChangeMap(boolean changeMap) {
+        this.changeMap = changeMap;
+    }
 
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -142,7 +151,7 @@ public class Player extends Actor {
         for(HashMap.Entry<String, Integer> element: inventoryDict.entrySet()){
             if(element.getKey() == "key") { display.append("\uD83D\uDDDD   " + " : " + element.getValue()); }
             else if(element.getKey() == "sword") { display.append("\uD83D\uDDE1  " + " : " + element.getValue()); }
-            else if(element.getKey() == "axe") { display.append("\uD83E\uDE93  " + " : " + element.getValue()); }
+            else if(element.getKey() == "axe") { display.append("⛏  " + " : " + element.getValue()); }
 
             display.append("\n");
         }
