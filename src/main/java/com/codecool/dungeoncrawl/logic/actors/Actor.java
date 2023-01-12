@@ -15,13 +15,10 @@ public abstract class Actor implements Drawable {
         this.health = getHealth();
         this.strength = getStrength();
     }
-    public void decreaseHealth(int decrease){
+    public void decreaseHealth(int decrease, int dx,int dy, Cell nextCell){
         this.health =- decrease;
     }
 
-    public int getHealth(int health) {
-        return this.health;
-    }
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);

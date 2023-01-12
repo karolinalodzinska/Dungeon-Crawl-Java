@@ -38,8 +38,11 @@ public class Cell implements Drawable {
         this.actor = actor;
     }
 
-    public void deleteActor(){
-        if (actor.getHealth() <= 0 ){
+    public void deleteActorIfHealthIsZero(){
+        if (this.actor == null){
+            //pass
+        }
+        else if (actor.getHealth() <= 0 ){
             if (actor instanceof Skeleton)
             {
                 actor = null;
@@ -51,6 +54,9 @@ public class Cell implements Drawable {
         }
     }
 
+    public void changePosition(){
+        actor = null;
+    }
     public Actor getActor() {
         return actor;
     }

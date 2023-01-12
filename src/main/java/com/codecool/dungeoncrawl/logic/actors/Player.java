@@ -36,7 +36,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void decreaseHealth(int decrease){
+    public void decreaseHealth(int decrease, int dx, int dy, Cell nextCell){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
@@ -48,11 +48,12 @@ public class Player extends Actor {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            decreaseHealth(nextCell.getActor().getStrength());
-            nextCell.getActor().decreaseHealth(this.getStrength());
-            nextCell.deleteActor();
+            decreaseHealth(nextCell.getActor().getStrength(), dx, dy, nextCell);
+            nextCell.getActor().decreaseHealth(this.getStrength(), dx, dy, nextCell);
+            nextCell.deleteActorIfHealthIsZero();
+
             Cell cell = getCell();
-            cell.deleteActor();
+            cell.deleteActorIfHealthIsZero();
 
         }
         else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {

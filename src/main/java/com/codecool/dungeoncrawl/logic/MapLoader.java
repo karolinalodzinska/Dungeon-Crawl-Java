@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.items.Axe;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Potion;
 import com.codecool.dungeoncrawl.logic.items.Sword;
+import com.codecool.dungeoncrawl.ui.Randomize;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -20,6 +21,9 @@ public class MapLoader {
         int height = scanner.nextInt();
 
         scanner.nextLine(); // empty line
+
+        boolean isMagicianOnMap = false;
+        int counterHowManyTimesMagicianDidntAppearOnMap = 0;
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
@@ -45,9 +49,20 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             map.setWarrior(new Warrior(cell));
                             break;
-                        case 'b':
-                            cell.setType(CellType.FLOOR);
-                            map.setMagician(new Magician(cell));
+                        case 'b' :
+                            Randomize randomize = new Randomize();
+
+                            if (randomize.getrandomNumberForMagician() == 0 && !isMagicianOnMap){
+                                isMagicianOnMap = true;
+                                cell.setType(CellType.FLOOR);
+                                map.setMagician(new Magician(cell));
+                            } else if (counterHowManyTimesMagicianDidntAppearOnMap == 3 ) {
+                                cell.setType(CellType.FLOOR);
+                                map.setMagician(new Magician(cell));
+                            } else {
+                                counterHowManyTimesMagicianDidntAppearOnMap++;
+                                cell.setType(CellType.FLOOR);
+                            }
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);

@@ -22,7 +22,7 @@ public class Skeleton extends Actor {
     }
 
     @Override
-    public void decreaseHealth(int decrease){
+    public void decreaseHealth(int decrease, int dx, int dy,Cell nextCell){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
