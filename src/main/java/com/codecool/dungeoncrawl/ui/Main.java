@@ -24,8 +24,6 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
-    Label skelteonHealthLabel = new Label();
-    Label skelteonHealthLabe1 = new Label();
     Label attackStrengthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
 
@@ -105,7 +103,6 @@ public class Main extends Application {
         playerInventory.setText(map.getPlayer().displayInventory());
         attackStrengthLabel.setText("" + map.getPlayer().getStrength());
         playerHealthLabel.setText("" + map.getPlayer().getHealth());
-//        if (map.getCell(1, 1).getActor() == null) skelteonHealthLabel.setText("dead");
-//        if (map.getCell(1, 1).getActor() == null) map.getCell(1,1 ).deleteActor();
+
     }
 }

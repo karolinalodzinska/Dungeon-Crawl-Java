@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Magician;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Warrior;
 import com.codecool.dungeoncrawl.logic.items.Axe;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Potion;
@@ -38,6 +40,14 @@ public class MapLoader {
                         case 's':
                             cell.setType(CellType.FLOOR);
                             map.setSkeleton(new Skeleton(cell));
+                            break;
+                        case 'w':
+                            cell.setType(CellType.FLOOR);
+                            map.setWarrior(new Warrior(cell));
+                            break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            map.setMagician(new Magician(cell));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);

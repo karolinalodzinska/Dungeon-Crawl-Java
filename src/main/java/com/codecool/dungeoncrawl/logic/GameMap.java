@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Magician;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Warrior;
 
 public class GameMap {
     private int width;
@@ -11,6 +13,10 @@ public class GameMap {
     private Player player;
 
     private Skeleton skeleton;
+
+    private Warrior warrior;
+
+    private Magician magician;
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -26,9 +32,6 @@ public class GameMap {
     public Cell getCell(int x, int y) {
         return cells[x][y];
     }
-    public void deleteSketeton(){
-        this.skeleton = null;
-    }
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -41,9 +44,13 @@ public class GameMap {
         return player;
     }
 
-    public Skeleton getSkeleton() {
-        return skeleton;
+    public void setWarrior(Warrior warrior) {
+        this.warrior = warrior;
     }
+    public void setMagician(Magician magician) {
+        this.magician = magician;
+    }
+
 
     public int getWidth() {
         return width;

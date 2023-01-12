@@ -23,8 +23,8 @@ import java.util.HashMap;
 public class Player extends Actor {
 
     private ArrayList<Item> inventory;
-    public static final int STRENGTH = 3;
-    public static final int HEALTH  = 10;
+    public static final int STRENGTH = 5;
+    public static final int HEALTH  = 20;
     public Player(Cell cell) {
         super(cell, HEALTH);
         this.setStrength(STRENGTH);

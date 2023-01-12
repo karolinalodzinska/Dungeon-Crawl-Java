@@ -2,17 +2,17 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Magician extends Actor {
+public class Warrior extends Actor {
 
     public static final int STRENGTH = 3;
-    public static final int HEALTH  = 6;
+    public static final int HEALTH  = 7;
 
-    public Magician(Cell cell) {
+    public Warrior(Cell cell) {
         super(cell, HEALTH);
     }
 
     public String getTileName() {
-        return "magician";
+        return "warrior";
     }
 
     @Override
