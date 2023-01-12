@@ -23,11 +23,10 @@ import java.util.HashMap;
 public class Player extends Actor {
 
     private ArrayList<Item> inventory;
-    public static final int STRENGTH = 5;
-    public static final int HEALTH = 10;
+    public static final int STRENGTH = 3;
+    public static final int HEALTH  = 10;
     public Player(Cell cell) {
-        super(cell);
-        this.setHealth(HEALTH);
+        super(cell, HEALTH);
         this.setStrength(STRENGTH);
         this.inventory = new ArrayList<>();
     }
@@ -36,9 +35,27 @@ public class Player extends Actor {
         return "player";
     }
 
+    @Override
+    public void decreaseHealth(int decrease){
+        int  health = getHealth();
+        health -= decrease;
+        setHealth(health);
+    }
+
+
+
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+
+        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
+            decreaseHealth(4);
+            nextCell.getActor().decreaseHealth(this.getStrength());
+           nextCell.deleteActor();
+            Cell cell = getCell();
+            cell.deleteActor();
+
+        }
+        else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
             move(dx, dy);
         }
     }
