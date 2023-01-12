@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
-import com.codecool.dungeoncrawl.logic.items.Door;
 import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Potion;
 import com.codecool.dungeoncrawl.logic.items.Sword;
@@ -48,10 +47,8 @@ public class MapLoader {
                             new Potion(cell);
                             break;
                         case 'k':
-                            Door door = new Door(cell);
                             cell.setType(CellType.FLOOR);
-                            cell.setDoor(door);
-                            new Key(cell,door);
+                            new Key(cell);
                             break;
                         case 'm':
                             cell.setType(CellType.FLOOR);
@@ -61,6 +58,8 @@ public class MapLoader {
                             cell.setType(CellType.OPEN_DOOR);
                             break;
                         case 'c':
+                            Door door = new Door();
+                            cell.setDoor(door);
                             cell.setType(CellType.CLOSED_DOOR);
                             break;
                         default:

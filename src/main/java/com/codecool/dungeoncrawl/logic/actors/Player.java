@@ -1,15 +1,14 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.logic.Door;
 import com.codecool.dungeoncrawl.logic.items.*;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.ui.Main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends Actor {
-    private Main main;
 
     private ArrayList<Item> inventory;
     public static final int STRENGTH = 5;
@@ -20,11 +19,6 @@ public class Player extends Actor {
         this.setHealth(HEALTH);
         this.setStrength(STRENGTH);
         this.inventory = new ArrayList<>();
-    }
-
-
-    public void setMain(Main main){
-        this.main = main;
     }
 
     public String getTileName() {
@@ -42,13 +36,11 @@ public class Player extends Actor {
             } else {
                 for (Item item : inventory) {
                     if (item instanceof Key) {
-                        Key key = (Key) item;
-                        if (key.getDoor() == door) {
+                        if (door != null) {
                             inventory.remove(item);
                             door.setOpen(true);
                             nextCell.setType(CellType.OPEN_DOOR);
                             move(dx, dy);
-                            main.refresh();
                             return;
                         }
                     }
@@ -56,8 +48,6 @@ public class Player extends Actor {
             }
         }
     }
-
-
 
     public void addToInventory(Item item) {
         inventory.add(item);
@@ -108,7 +98,6 @@ public class Player extends Actor {
                 }else{
                     inventoryDict.put("Sword", swordCount);
                 }
-
             }
         }
         for(HashMap.Entry<String, Integer> element: inventoryDict.entrySet()){
@@ -116,9 +105,7 @@ public class Player extends Actor {
             display.append("\n");
         }
 
-
         return display.toString();
     }
-
 }
 

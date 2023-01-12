@@ -38,8 +38,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Player player = new Player(map.getPlayer().getCell());
-        player.setMain(this);
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
