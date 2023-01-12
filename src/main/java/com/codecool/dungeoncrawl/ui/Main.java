@@ -100,30 +100,28 @@ public class Main extends Application {
     }
 
     public void refresh() {
-    private void refresh() {
 
-        int minX = map.getCenterCell().getX() - CANVAS_WIDTH/2;
-        int minY = map.getCenterCell().getY() - CANVAS_HEIGHT/2;
-        int maxX = map.getCenterCell().getX() + CANVAS_WIDTH/2;
-        int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT/2;
+            int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
+            int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
+            int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
+            int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
 
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            context.setFill(Color.BLACK);
+            context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for (int x = minX; x < maxX; x++) {
-            for (int y = minY; y < maxY; y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
-                } else {
-                    Tiles.drawTile(context, cell, x - minX, y - minY);
+            for (int x = minX; x < maxX; x++) {
+                for (int y = minY; y < maxY; y++) {
+                    Cell cell = map.getCell(x, y);
+                    if (cell.getActor() != null) {
+                        Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
+                    } else {
+                        Tiles.drawTile(context, cell, x - minX, y - minY);
+                    }
                 }
             }
+            playerInventory.setText(map.getPlayer().displayInventory());
+            attackStrengthLabel.setText("" + map.getPlayer().getStrength());
+            playerHealthLabel.setText("" + map.getPlayer().getHealth());
+
         }
-        playerInventory.setText(map.getPlayer().displayInventory());
-        attackStrengthLabel.setText("" + map.getPlayer().getStrength());
-        playerHealthLabel.setText("" + map.getPlayer().getHealth());
-//        if (map.getCell(1, 1).getActor() == null) skelteonHealthLabel.setText("dead");
-//        if (map.getCell(1, 1).getActor() == null) map.getCell(1,1 ).deleteActor();
     }
-}
