@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.Item;
 
 public class Cell implements Drawable {
@@ -37,6 +38,19 @@ public class Cell implements Drawable {
         this.actor = actor;
     }
 
+    public void deleteActor(){
+        if (actor.getHealth() <= 0 ){
+            if (actor instanceof Skeleton)
+            {
+                actor = null;
+            }
+            else {
+                actor = null;
+                System.out.println("end");
+            }
+        }
+    }
+
     public Actor getActor() {
         return actor;
     }
@@ -44,6 +58,8 @@ public class Cell implements Drawable {
     public Cell getNeighbor(int dx, int dy) {
         return gameMap.getCell(x + dx, y + dy);
     }
+
+
 
     @Override
     public String getTileName() {
