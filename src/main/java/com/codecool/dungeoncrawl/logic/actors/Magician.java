@@ -4,8 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Magician extends Actor {
 
-    public static final int STRENGTH = 5;
-    public static final int HEALTH  = 6;
+    public static final int STRENGTH = 6;
+    public static final int HEALTH  = 15;
 
 
 
@@ -22,13 +22,17 @@ public class Magician extends Actor {
         return "magician";
     }
 
-    public void decreaseHealth(int decrease,int dx,int dy,Cell nextCell){
+
+    public void consequenceOfFigthing(int decrease){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
-        nextCell.changePosition();
+        Cell cell1 = cell.getNewCellForEnemy(19, 9);
+        cell1.setActor(new Magician(cell1));
 
+        this.cell.deleteActor();
     }
+
 
 //
 }

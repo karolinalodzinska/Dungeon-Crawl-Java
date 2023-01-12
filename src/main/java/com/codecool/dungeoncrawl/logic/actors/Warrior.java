@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Warrior extends Actor {
 
-    public static final int STRENGTH = 3;
+    public static final int STRENGTH = 12;
     public static final int HEALTH  = 7;
 
     public Warrior(Cell cell) {
@@ -21,9 +21,20 @@ public class Warrior extends Actor {
     }
 
     @Override
-    public void decreaseHealth(int decrease, int dx, int dy, Cell nextCell){
+    public void consequenceOfFigthing(int decrease){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
+        int newY;
+        if(this.cell.getX() == 4) {
+            newY  = 5;
+        }
+        else {
+            newY = 4;
+        }
+        Cell cell1 = cell.getNewCellForEnemy(newY, 7);
+        cell1.setActor(new Warrior(cell1));
+        System.out.println(this.cell.getActor().getHealth());
+        this.cell.deleteActor();
     }
 }

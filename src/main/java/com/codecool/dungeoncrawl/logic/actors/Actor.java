@@ -15,7 +15,7 @@ public abstract class Actor implements Drawable {
         this.health = getHealth();
         this.strength = getStrength();
     }
-    public void decreaseHealth(int decrease, int dx,int dy, Cell nextCell){
+    public void consequenceOfFigthing(int decrease){
         this.health =- decrease;
     }
 
@@ -26,6 +26,7 @@ public abstract class Actor implements Drawable {
         nextCell.setActor(this);
         cell = nextCell;
     }
+
 
 
     public int getHealth() {

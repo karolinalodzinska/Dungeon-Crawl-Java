@@ -24,7 +24,7 @@ public class Player extends Actor {
 
     private ArrayList<Item> inventory;
     public static final int STRENGTH = 5;
-    public static final int HEALTH  = 20;
+    public static final int HEALTH  = 30;
     public Player(Cell cell) {
         super(cell, HEALTH);
         this.setStrength(STRENGTH);
@@ -36,7 +36,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void decreaseHealth(int decrease, int dx, int dy, Cell nextCell){
+    public void consequenceOfFigthing(int decrease){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
@@ -48,8 +48,8 @@ public class Player extends Actor {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            decreaseHealth(nextCell.getActor().getStrength(), dx, dy, nextCell);
-            nextCell.getActor().decreaseHealth(this.getStrength(), dx, dy, nextCell);
+            consequenceOfFigthing(nextCell.getActor().getStrength());
+            nextCell.getActor().consequenceOfFigthing(this.getStrength());
             nextCell.deleteActorIfHealthIsZero();
 
             Cell cell = getCell();
