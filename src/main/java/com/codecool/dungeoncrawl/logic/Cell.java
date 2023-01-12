@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.items.Door;
 import com.codecool.dungeoncrawl.logic.items.Item;
 
 public class Cell implements Drawable {
@@ -9,6 +10,7 @@ public class Cell implements Drawable {
     private Item item;
     private GameMap gameMap;
     private int x, y;
+    private Door door;
 
     public Item getItem() {
         return item;
@@ -47,7 +49,13 @@ public class Cell implements Drawable {
 
     @Override
     public String getTileName() {
-        return actor != null ? actor.getTileName() : type.getTileName();
+        if (actor != null) {
+            return actor.getTileName();
+        } else if (item != null) {
+            return item.getTileName();
+        } else {
+            return type.getTileName();
+        }
     }
 
     public int getX() {
@@ -56,5 +64,12 @@ public class Cell implements Drawable {
 
     public int getY() {
         return y;
+    }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
+    public Door getDoor(){
+        return door;
     }
 }
