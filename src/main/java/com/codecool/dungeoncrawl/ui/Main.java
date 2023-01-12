@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.ui;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.ui.Tiles;
 import javafx.application.Application;
@@ -28,6 +29,7 @@ public class Main extends Application {
             CANVAS_HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
+
     Label skelteonHealthLabel = new Label();
     Label skelteonHealthLabe1 = new Label();
     Label attackStrengthLabel = new Label();
@@ -97,6 +99,10 @@ public class Main extends Application {
 
         map.centerPosition();
         refresh();
+
+        if (isPlayerDead(map.getPlayer())){
+            System.out.println("You lose ---------------------------------------------------");
+        }
     }
 
     public void refresh() {
@@ -123,5 +129,17 @@ public class Main extends Application {
             attackStrengthLabel.setText("" + map.getPlayer().getStrength());
             playerHealthLabel.setText("" + map.getPlayer().getHealth());
 
+        if (isPlayerDead(map.getPlayer())) {
+            playerHealthLabel.setText("YOU DIED!");
         }
+
+        }
+
+    public Boolean isPlayerDead(Actor player) {
+        if (player.getHealth() <= 0) {
+            return true;
+        }
+        return false;
+    }
+
     }

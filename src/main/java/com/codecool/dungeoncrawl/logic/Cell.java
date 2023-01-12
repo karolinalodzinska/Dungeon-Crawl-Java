@@ -39,7 +39,7 @@ public class Cell implements Drawable {
         this.actor = actor;
     }
 
-    public void deleteActor(){
+    public void removeActor(){
         if (actor.getHealth() <= 0 ){
             if (actor instanceof Skeleton)
             {
@@ -47,7 +47,7 @@ public class Cell implements Drawable {
             }
             else {
                 actor = null;
-                System.out.println("end");
+
             }
         }
     }

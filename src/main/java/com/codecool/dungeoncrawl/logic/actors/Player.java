@@ -1,16 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.ui.Tiles;
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import com.codecool.dungeoncrawl.logic.Door;
-import com.codecool.dungeoncrawl.logic.items.*;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -45,8 +35,6 @@ public class Player extends Actor {
         setHealth(health);
     }
 
-
-
     public boolean getChangeMap() {
         return changeMap;
     }
@@ -79,9 +67,9 @@ public class Player extends Actor {
         } else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
             decreaseHealth(4);
             nextCell.getActor().decreaseHealth(this.getStrength());
-            nextCell.deleteActor();
+            nextCell.removeActor();
             Cell cell = getCell();
-            cell.deleteActor();
+            cell.removeActor();
         }
     }
 
@@ -159,6 +147,7 @@ public class Player extends Actor {
 
         return display.toString();
     }
+
 
 }
 
