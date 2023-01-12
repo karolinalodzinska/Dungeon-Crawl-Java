@@ -29,9 +29,6 @@ public class Main extends Application {
             CANVAS_HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label playerHealthLabel = new Label();
-
-    Label skelteonHealthLabel = new Label();
-    Label skelteonHealthLabe1 = new Label();
     Label attackStrengthLabel = new Label();
     Button pickUpButton = new Button("Pick up");
 

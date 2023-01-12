@@ -16,8 +16,8 @@ public class Player extends Actor {
 
     private ArrayList<Item> inventory;
     private boolean changeMap = false;
-    public static final int STRENGTH = 3;
-    public static final int HEALTH  = 10;
+    public static final int STRENGTH = 5;
+    public static final int HEALTH  = 30;
     public Player(Cell cell) {
         super(cell, HEALTH);
         this.setStrength(STRENGTH);
@@ -29,7 +29,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void decreaseHealth(int decrease){
+    public void consequenceOfFigthing(int decrease){
         int  health = getHealth();
         health -= decrease;
         setHealth(health);
@@ -45,8 +45,15 @@ public class Player extends Actor {
 
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+
+        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
+            consequenceOfFigthing(nextCell.getActor().getStrength());
+            nextCell.getActor().consequenceOfFigthing(this.getStrength());
+            nextCell.deleteActorIfHealthIsZero(); }
+
+        else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
             move(dx, dy);
+
         } else if (nextCell.getType() == CellType.OPEN_DOOR || nextCell.getType() == CellType.CLOSED_DOOR) {
             Door door = nextCell.getDoor();
             if (nextCell.getType() == CellType.OPEN_DOOR) {
@@ -64,14 +71,10 @@ public class Player extends Actor {
                     }
                 }
             }
-        } else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            decreaseHealth(4);
-            nextCell.getActor().decreaseHealth(this.getStrength());
-            nextCell.removeActor();
-            Cell cell = getCell();
-            cell.removeActor();
         }
     }
+
+
 
     public void addToInventory(Item item) {
         inventory.add(item);

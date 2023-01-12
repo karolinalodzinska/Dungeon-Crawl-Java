@@ -39,28 +39,38 @@ public class Cell implements Drawable {
         this.actor = actor;
     }
 
-    public void removeActor(){
-        if (actor.getHealth() <= 0 ){
+    public void deleteActorIfHealthIsZero(){
+        if (this.actor == null){
+            //pass
+        }
+        else if (actor.getHealth() <= 0 ){
             if (actor instanceof Skeleton)
             {
                 actor = null;
             }
             else {
                 actor = null;
-
+                System.out.println("end");
             }
         }
     }
 
+    public void deleteActor(){
+
+        actor = null;
+    }
     public Actor getActor() {
         return actor;
     }
 
-    public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+    public Cell getNewCellForEnemy (int x, int y) {
+        return gameMap.getCell(x , y );
     }
 
 
+    public Cell getNeighbor(int dx, int dy) {
+        return gameMap.getCell(x + dx, y + dy);
+    }
 
     @Override
     public String getTileName() {
