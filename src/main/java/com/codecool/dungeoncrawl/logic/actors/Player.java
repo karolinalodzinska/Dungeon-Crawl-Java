@@ -58,6 +58,7 @@ public class Player extends Actor {
             Door door = nextCell.getDoor();
             if (nextCell.getType() == CellType.OPEN_DOOR) {
                 move(dx, dy);
+
             } else {
                 for (Item item : inventory) {
                     if (item instanceof Key) {

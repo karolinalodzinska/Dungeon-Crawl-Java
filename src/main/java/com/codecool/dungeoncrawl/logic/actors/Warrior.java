@@ -4,8 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Warrior extends Actor {
 
-    public static final int STRENGTH = 12;
-    public static final int HEALTH  = 7;
+    public static final int STRENGTH = 5;
+    public static final int HEALTH  = 10;
 
     public Warrior(Cell cell) {
         super(cell, HEALTH);
