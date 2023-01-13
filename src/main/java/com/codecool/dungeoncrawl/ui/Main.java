@@ -129,14 +129,9 @@ public class Main extends Application {
         if (isPlayerDead(map.getPlayer())) {
             playerHealthLabel.setText("YOU DIED!");
         }
-
         }
 
     public Boolean isPlayerDead(Actor player) {
-        if (player.getHealth() <= 0) {
-            return true;
-        }
-        return false;
+        return player.getHealth() <= 0;
     }
-
     }

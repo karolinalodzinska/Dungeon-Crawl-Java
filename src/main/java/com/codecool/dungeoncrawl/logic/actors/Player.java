@@ -49,9 +49,9 @@ public class Player extends Actor {
         if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
             consequenceOfFigthing(nextCell.getActor().getStrength());
             nextCell.getActor().consequenceOfFigthing(this.getStrength());
-            nextCell.deleteActorIfHealthIsZero(); }
+            nextCell.deleteActorIfHealthIsZero();
 
-        else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
+        } else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
             move(dx, dy);
 
         } else if (nextCell.getType() == CellType.OPEN_DOOR || nextCell.getType() == CellType.CLOSED_DOOR) {
@@ -62,13 +62,12 @@ public class Player extends Actor {
             } else {
                 for (Item item : inventory) {
                     if (item instanceof Key) {
-                        if (door != null) {
-                            inventory.remove(item);
-                            door.setOpen(true);
-                            nextCell.setType(CellType.OPEN_DOOR);
-                            move(dx, dy);
-                            return;
-                        }
+                        inventory.remove(item);
+                        door.setOpen(true);
+                        nextCell.setType(CellType.OPEN_DOOR);
+                        move(dx, dy);
+                        return;
+
                     }
                 }
             }

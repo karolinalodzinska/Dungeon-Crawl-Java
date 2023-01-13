@@ -7,8 +7,6 @@ public class Magician extends Actor {
     public static final int STRENGTH = 6;
     public static final int HEALTH  = 15;
 
-
-
     public Magician(Cell cell) {
         super(cell, HEALTH);
     }
