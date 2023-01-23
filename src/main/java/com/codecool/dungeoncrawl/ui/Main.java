@@ -1,15 +1,18 @@
-package com.codecool.dungeoncrawl;
+package com.codecool.dungeoncrawl.ui;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.ui.Tiles;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -23,12 +26,19 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+
+    final int CANVAS_WIDTH = 20;
+    final int CANVAS_HEIGHT = 20;
+    GameMap map = new MapLoader().loadMap();
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            CANVAS_WIDTH * Tiles.TILE_WIDTH,
+            CANVAS_HEIGHT * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
-    Label healthLabel = new Label();
+    Label playerHealthLabel = new Label();
+    Label attackStrengthLabel = new Label();
+    Button pickUpButton = new Button("Pick up");
+
+    Label playerInventory = new Label("INVENTORY: ");
     GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
@@ -37,13 +47,29 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        setupDbManager();
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
+        ui.add(new Label("PLayer Health: "), 0, 0);
+        ui.add(playerHealthLabel, 1, 0);
+
+
+        ui.add(new Label("  "), 0, 2);
+        ui.add(new Label("Attack Strength: "), 0, 1);
+        ui.add(attackStrengthLabel, 1, 1);
+        ui.add(new Label("  "), 0, 4);
+
+        ui.add(pickUpButton, 0, 5);
+        pickUpButton.setOnAction(mousedown -> {
+            map.getPlayer().pickUpItem();
+            refresh();
+        });
+
+        ui.add(new Label("  "), 0, 6);
+        pickUpButton.setFocusTraversable(false);
+        ui.add(playerInventory, 0, 8);
+
 
         BorderPane borderPane = new BorderPane();
 
@@ -55,6 +81,7 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
         scene.setOnKeyReleased(this::onKeyReleased);
+
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
@@ -69,46 +96,61 @@ public class Main extends Application {
             exit();
         }
     }
-
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
-                map.getPlayer().move(0, -1);
-                refresh();
+                map.getPlayer().attemptMove(0, -1);
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
-                refresh();
+                map.getPlayer().attemptMove(0, 1);
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
-                refresh();
+                map.getPlayer().attemptMove(-1, 0);
                 break;
             case RIGHT:
-                map.getPlayer().move(1, 0);
-                refresh();
+                map.getPlayer().attemptMove(1, 0);
                 break;
-            case S:
-                Player player = map.getPlayer();
-                dbManager.savePlayer(player);
-                break;
+        }
+
+        map.centerPosition();
+        refresh();
+
+        if (isPlayerDead(map.getPlayer())){
+            System.out.println("You lose ---------------------------------------------------");
         }
     }
 
-    private void refresh() {
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
-                    Tiles.drawTile(context, cell, x, y);
+    public void refresh() {
+
+            int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
+            int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
+            int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
+            int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
+
+            context.setFill(Color.BLACK);
+            context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+            for (int x = minX; x < maxX; x++) {
+                for (int y = minY; y < maxY; y++) {
+                    Cell cell = map.getCell(x, y);
+                    if (cell.getActor() != null) {
+                        Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
+                    } else {
+                        Tiles.drawTile(context, cell, x - minX, y - minY);
+                    }
                 }
             }
+            playerInventory.setText(map.getPlayer().displayInventory());
+            attackStrengthLabel.setText("" + map.getPlayer().getStrength());
+            playerHealthLabel.setText("" + map.getPlayer().getHealth());
+
+        if (isPlayerDead(map.getPlayer())) {
+            playerHealthLabel.setText("YOU DIED!");
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+        }
+
+    public Boolean isPlayerDead(Actor player) {
+        return player.getHealth() <= 0;
     }
 
     private void setupDbManager() {
@@ -129,3 +171,5 @@ public class Main extends Application {
         System.exit(0);
     }
 }
+
+
