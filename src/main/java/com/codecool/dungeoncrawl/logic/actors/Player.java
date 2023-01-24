@@ -91,7 +91,7 @@ public class Player extends Actor {
     public void addToInventory(Item item) {
         inventory.add(item);
     }
-    public void setInventory(ArrayList<Item> inventory) {
+    public void setInventory(ArrayList inventory) {
         this.inventory = inventory;
     }
     public void removeFromInventory(Item item) {

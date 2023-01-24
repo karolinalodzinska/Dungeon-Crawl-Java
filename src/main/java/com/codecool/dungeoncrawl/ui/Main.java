@@ -2,11 +2,10 @@ package com.codecool.dungeoncrawl.ui;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.ui.Tiles;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -24,12 +23,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Main extends Application {
+    private int level = 1;
 
     final int CANVAS_WIDTH = 20;
     final int CANVAS_HEIGHT = 20;
-    GameMap map = new MapLoader().loadMap();
+    GameMap map = new MapLoader().loadMap(level);
     Canvas canvas = new Canvas(
             CANVAS_WIDTH * Tiles.TILE_WIDTH,
             CANVAS_HEIGHT * Tiles.TILE_WIDTH);
@@ -147,7 +148,27 @@ public class Main extends Application {
         if (isPlayerDead(map.getPlayer())) {
             playerHealthLabel.setText("YOU DIED!");
         }
+//        System.out.println(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR));
+
+        if (map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
+            level += 1;
+            setNextMap();
+//        } else if (map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
+//            level -= 1;
+//            setNextMap();
         }
+        }
+    private void setNextMap() {
+
+        ArrayList inventory = map.getPlayer().getInventory();
+        int health = map.getPlayer().getHealth();
+        int strength = map.getPlayer().getStrength();
+        this.map = MapLoader.loadMap(level);
+        map.getPlayer().setInventory(inventory);
+        map.getPlayer().setHealth(health);
+        map.getPlayer().setStrength(strength);
+        refresh();
+    }
 
     public Boolean isPlayerDead(Actor player) {
         return player.getHealth() <= 0;
