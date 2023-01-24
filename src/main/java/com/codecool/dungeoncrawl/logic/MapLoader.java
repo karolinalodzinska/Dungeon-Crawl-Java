@@ -14,9 +14,19 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class MapLoader {
-    public GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
-        Scanner scanner = new Scanner(is);
+
+    private static InputStream levelSelector(int level){
+        String level1 = "/map.txt";
+        String level2 = "/map2.txt";
+        if (level == 1){
+            return MapLoader.class.getResourceAsStream(level1);
+        } else {
+            return MapLoader.class.getResourceAsStream(level2);
+        }
+    }
+    public static GameMap loadMap(int level) {
+//        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+        Scanner scanner = new Scanner(levelSelector(level));
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 
