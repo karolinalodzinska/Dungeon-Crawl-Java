@@ -11,14 +11,14 @@ public class PotionTest {
 
     @Test
     void getTileNameTestPositive(){
-        Potion keyTested = new Potion(new Cell(map, 1, 1, CellType.FLOOR));
-        assertEquals("potion", keyTested.getTileName());
+        Potion potionTested = new Potion(new Cell(map, 1, 1, CellType.FLOOR));
+        assertEquals("potion", potionTested.getTileName());
     }
 
     @Test
     void getTileNameTestNegative(){
-        Potion keyTested = new Potion(new Cell(map, 1, 1, CellType.FLOOR));
-        assertNotEquals("key", keyTested.getTileName());
+        Potion potionTested = new Potion(new Cell(map, 1, 1, CellType.FLOOR));
+        assertNotEquals("key", potionTested.getTileName());
     }
 }
 

@@ -11,14 +11,14 @@ public class SwordTest {
 
     @Test
     void getTileNameTestPositive(){
-        Sword keyTested = new Sword(new Cell(map, 1, 1, CellType.FLOOR));
-        assertEquals("sword", keyTested.getTileName());
+        Sword swordTested = new Sword(new Cell(map, 1, 1, CellType.FLOOR));
+        assertEquals("sword", swordTested.getTileName());
     }
 
     @Test
     void getTileNameTestNegative(){
-        Sword keyTested = new Sword(new Cell(map, 1, 1, CellType.FLOOR));
-        assertNotEquals("key", keyTested.getTileName());
+        Sword swordTested = new Sword(new Cell(map, 1, 1, CellType.FLOOR));
+        assertNotEquals("key", swordTested.getTileName());
     }
 }
 

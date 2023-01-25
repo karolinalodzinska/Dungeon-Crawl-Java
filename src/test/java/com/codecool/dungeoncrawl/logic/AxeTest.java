@@ -11,13 +11,13 @@ public class AxeTest {
 
     @Test
     void getTileNameTestPositive(){
-        Axe keyTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
-        assertEquals("axe", keyTested.getTileName());
+        Axe axeTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
+        assertEquals("axe", axeTested.getTileName());
     }
 
     @Test
     void getTileNameTestNegative(){
-        Axe keyTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
-        assertNotEquals("key", keyTested.getTileName());
+        Axe axeTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
+        assertNotEquals("key", axeTested.getTileName());
     }
 }
