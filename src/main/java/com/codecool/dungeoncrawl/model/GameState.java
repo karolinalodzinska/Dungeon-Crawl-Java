@@ -16,6 +16,7 @@ public class GameState extends BaseModel {
         this.player = player;
     }
 
+
     public Date getSavedAt() {
         return savedAt;
     }
