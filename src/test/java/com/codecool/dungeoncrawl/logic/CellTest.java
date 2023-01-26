@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +43,43 @@ class CellTest {
 
         assertEquals(actor, cell.getActor());
     }
+
+    @Test
+    public void deleteActorIfHealthIsZero_ActorIsNull_DoesNothing() {
+        Cell cell = map.getCell(1, 1);
+        cell.deleteActorIfHealthIsZero();
+        assertNull(cell.getActor());
+    }
+
+    @Test
+    public void deleteActorIfHealthIsZero_ActorIsSkeleton_DeletesActor() {
+        Cell cell = map.getCell(1, 1);
+        Skeleton skeleton = new Skeleton(cell);
+        cell.setActor(skeleton);
+        skeleton.setHealth(0);
+        cell.deleteActorIfHealthIsZero();
+        assertNull(cell.getActor());
+    }
+
+    @Test
+    public void deleteActorIfHealthIsZero_ActorIsPlayer_DeletesActor() {
+        Cell cell = map.getCell(1, 1);
+        Player player = new Player(cell);
+        cell.setActor(player);
+        player.setHealth(0);
+        cell.deleteActorIfHealthIsZero();
+        assertNull(cell.getActor());
+    }
+
+    @Test
+    public void deleteActorIfHealthIsZero_ActorIsPlayer_HealthIsGreaterThanZero_DoesNothing() {
+        Cell cell = map.getCell(1, 1);
+        Player player = new Player(cell);
+        cell.setActor(player);
+        player.setHealth(1);
+        cell.deleteActorIfHealthIsZero();
+        assertNotNull(cell.getActor());
+    }
+
 
 }
