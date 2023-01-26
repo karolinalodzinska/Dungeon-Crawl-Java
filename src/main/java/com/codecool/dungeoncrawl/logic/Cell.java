@@ -103,7 +103,7 @@ public class Cell implements Drawable {
         return door;
     }
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
+//    public GameMap getGameMap() {
+//        return gameMap;
+//    }
 }
