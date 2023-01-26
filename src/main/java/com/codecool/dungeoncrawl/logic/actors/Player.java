@@ -25,17 +25,17 @@ public class Player extends Actor {
         this.inventory = new ArrayList<>();
     }
 
-    public Player(Cell cell, String name) {
-        super(cell, HEALTH);
-        this.name = name;
-    }
+//    public Player(Cell cell, String name) {
+//        super(cell, HEALTH);
+//        this.name = name;
+//    }
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
     public String getTileName() {
         return "player";
     }
@@ -47,13 +47,13 @@ public class Player extends Actor {
         setHealth(health);
     }
 
-    public boolean getChangeMap() {
-        return changeMap;
-    }
-
-    public void setChangeMap(boolean changeMap) {
-        this.changeMap = changeMap;
-    }
+//    public boolean getChangeMap() {
+//        return changeMap;
+//    }
+//
+//    public void setChangeMap(boolean changeMap) {
+//        this.changeMap = changeMap;
+//    }
 
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -94,9 +94,9 @@ public class Player extends Actor {
     public void setInventory(ArrayList inventory) {
         this.inventory = inventory;
     }
-    public void removeFromInventory(Item item) {
-        inventory.remove(item);
-    }
+//    public void removeFromInventory(Item item) {
+//        inventory.remove(item);
+//    }
     public ArrayList getInventory() {
         return inventory;
     }
