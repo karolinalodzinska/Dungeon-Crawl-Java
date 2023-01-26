@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.items.Key;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class KeyTest {
+class KeyTest {
     GameMap map = new GameMap(3, 3, CellType.FLOOR);
 
     @Test

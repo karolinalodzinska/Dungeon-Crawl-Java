@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SkeletonTest {
+class SkeletonTest {
     Skeleton skeleton;
     Player player;
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SwordTest {
+class SwordTest {
     GameMap map = new GameMap(3, 3, CellType.FLOOR);
 
     @Test
