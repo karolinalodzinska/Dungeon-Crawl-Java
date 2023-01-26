@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,4 +25,21 @@ class CellTest {
         cell = map.getCell(1, 2);
         assertEquals(null, cell.getNeighbor(0, 1));
     }
+
+    @Test
+    void getItem_CellWithoutItem_ReturnsNull() {
+        Cell cell = map.getCell(1, 1);
+        assertNull(cell.getItem());
+    }
+
+    @Test
+    void deleteActor_ActorNotExist_NoChange() {
+        Cell cell = map.getCell(1, 1);
+        Actor actor = cell.getActor();
+
+        cell.deleteActor();
+
+        assertEquals(actor, cell.getActor());
+    }
+
 }
