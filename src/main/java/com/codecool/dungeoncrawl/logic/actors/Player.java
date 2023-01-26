@@ -1,13 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Door;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.Axe;
-import com.codecool.dungeoncrawl.logic.items.Potion;
-import com.codecool.dungeoncrawl.logic.items.Sword;
+import com.codecool.dungeoncrawl.logic.Door;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,6 +158,16 @@ public class Player extends Actor {
 
         return display.toString();
     }
+
+    /*public JSONObject serializeToJSON(){
+        JSONObject jsonObject = new JSONObject();
+        Gson gson = new Gson();
+        jsonObject.addProperty("name",getName());
+        jsonObject.addProperty("hp",getHealth());
+        jsonObject.addProperty("x",getX());
+        jsonObject.addProperty("y",getY());
+        return jsonObject;
+    }*/
 
 
 }

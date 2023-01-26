@@ -11,26 +11,32 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class Main extends Application {
-    private int level = 1;
+import static java.time.LocalTime.now;
 
-    final int CANVAS_WIDTH = 20;
-    final int CANVAS_HEIGHT = 20;
-    GameMap map = new MapLoader().loadMap(level);
+public class Main extends Application {
+    private int currentMap = 1;
+
+    private LocalTime time = now();
+    final private int CANVAS_WIDTH = 20;
+    final private int CANVAS_HEIGHT = 20;
+    GameMap map = new MapLoader().loadMap(currentMap);
     Canvas canvas = new Canvas(
             CANVAS_WIDTH * Tiles.TILE_WIDTH,
             CANVAS_HEIGHT * Tiles.TILE_WIDTH);
@@ -97,6 +103,7 @@ public class Main extends Application {
             exit();
         }
     }
+
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
@@ -111,59 +118,64 @@ public class Main extends Application {
             case RIGHT:
                 map.getPlayer().attemptMove(1, 0);
                 break;
+            case S:
+                Popup pop = new Popup();
+                pop.show(createWindowForSavePopup());
+                break;
         }
 
         map.centerPosition();
         refresh();
 
-        if (isPlayerDead(map.getPlayer())){
+        if (isPlayerDead(map.getPlayer())) {
             System.out.println("You lose ---------------------------------------------------");
         }
     }
 
     public void refresh() {
 
-            int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
-            int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
-            int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
-            int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
+        int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
+        int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
+        int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
+        int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
 
-            context.setFill(Color.BLACK);
-            context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-            for (int x = minX; x < maxX; x++) {
-                for (int y = minY; y < maxY; y++) {
-                    Cell cell = map.getCell(x, y);
-                    if (cell.getActor() != null) {
-                        Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
-                    } else {
-                        Tiles.drawTile(context, cell, x - minX, y - minY);
-                    }
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
+                Cell cell = map.getCell(x, y);
+                if (cell.getActor() != null) {
+                    Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
+                } else {
+                    Tiles.drawTile(context, cell, x - minX, y - minY);
                 }
             }
-            playerInventory.setText(map.getPlayer().displayInventory());
-            attackStrengthLabel.setText("" + map.getPlayer().getStrength());
-            playerHealthLabel.setText("" + map.getPlayer().getHealth());
+        }
+        playerInventory.setText(map.getPlayer().displayInventory());
+        attackStrengthLabel.setText("" + map.getPlayer().getStrength());
+        playerHealthLabel.setText("" + map.getPlayer().getHealth());
 
         if (isPlayerDead(map.getPlayer())) {
             playerHealthLabel.setText("YOU DIED!");
         }
 //        System.out.println(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR));
 
-        if (map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
-            level += 1;
+        if (map.getCell(map.getPlayer().getX(), map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
+            currentMap += 1;
             setNextMap();
 //        } else if (map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
 //            level -= 1;
 //            setNextMap();
         }
-        }
+    }
+
     private void setNextMap() {
 
         ArrayList inventory = map.getPlayer().getInventory();
         int health = map.getPlayer().getHealth();
         int strength = map.getPlayer().getStrength();
-        this.map = MapLoader.loadMap(level);
+        this.map = MapLoader.loadMap(currentMap);
         map.getPlayer().setInventory(inventory);
         map.getPlayer().setHealth(health);
         map.getPlayer().setStrength(strength);
@@ -190,6 +202,56 @@ public class Main extends Application {
             System.exit(1);
         }
         System.exit(0);
+    }
+
+    public Window createWindowForSavePopup() {
+        Stage newStage = new Stage();
+        VBox comp = new VBox();
+        TextField nameField = new TextField("Name");
+        comp.getChildren().add(nameField);
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction((e) -> newStage.close());
+        cancel.setCancelButton(true);
+        cancel.setDefaultButton(true);
+        Button saveToSqlBtn = new Button("Save");
+        Button saveToFileBtn = new Button("Save to file");
+        saveToSqlBtn.setOnAction((e) -> {
+            map.getPlayer().setName(nameField.getText());
+            if (dbManager.doesExist(nameField.getText())) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Overwrite existing save");
+                alert.setContentText("Would you like to overwrite the already existing state?");
+                ButtonType btnType = alert.showAndWait().orElse(ButtonType.CANCEL);
+                if (btnType == ButtonType.CANCEL) newStage.close();
+                else {
+                    dbManager.updatePlayer(map.getPlayer());
+                    dbManager.updateMap(currentMap, time, map.getPlayer());
+                    newStage.close();
+                }
+            } else {
+                dbManager.savePlayer(map.getPlayer());
+                dbManager.saveMap(currentMap, time, map.getPlayer());
+                newStage.close();
+            }
+        });
+
+        /* saveToFileBtn.setOnAction((e) -> {
+            map.getPlayer().setName(nameField.getText());
+            JSONObject gameState = map.getPlayer().serializeToJSON();
+            gameState.addProperty("current_map", currentMap);
+            Util.createSave(map.getPlayer().getName() + ".json", gameState);
+            newStage.close();
+        }); */
+
+        comp.getChildren().add(cancel);
+        comp.getChildren().add(saveToSqlBtn);
+        comp.getChildren().add(saveToFileBtn);
+
+        Scene stageScene = new Scene(comp, 300, 300);
+        newStage.setScene(stageScene);
+        newStage.show();
+        return newStage;
+
     }
 }
 

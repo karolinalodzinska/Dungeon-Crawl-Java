@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import javax.sql.DataSource;
@@ -82,6 +81,20 @@ public class PlayerDaoJdbc implements PlayerDao {
             return result;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading author with id: " + e);
+        }
+    }
+    public boolean doesExist(String playerName){
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT player_name FROM player WHERE player_name = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, playerName);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

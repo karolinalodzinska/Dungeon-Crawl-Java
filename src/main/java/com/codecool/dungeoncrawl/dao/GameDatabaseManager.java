@@ -4,10 +4,10 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.model.GameState;
 import org.postgresql.ds.PGSimpleDataSource;
-import com.codecool.dungeoncrawl.logic.GameMap;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
 
 public class GameDatabaseManager {
@@ -34,20 +34,20 @@ public class GameDatabaseManager {
         return playerDao.getAll();
     }
 
-    public void saveMap(int currentMap, GameMap map, Player player){
+    public void saveMap(int currentMap, LocalTime time, Player player){
         PlayerModel playerModel = new PlayerModel(player);
-        GameState gameModel = new GameState(currentMap, map.toString(), playerModel);
+        GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.add(gameModel);
     }
 
-    public void updateMap(int currentMap, GameMap map, Player player){
+    public void updateMap(int currentMap, LocalTime time, Player player){
         PlayerModel playerModel = new PlayerModel(player);
-        GameState gameModel = new GameState(currentMap, map.toString(), playerModel);
+        GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.update(gameModel);
     }
 
-    public PlayerModel getPlayer(String name){
-        PlayerModel player =  playerDao.get(name);
+    public PlayerModel getPlayer(int id){
+        PlayerModel player =  playerDao.get(id);
         return  player;
     }
 
@@ -72,4 +72,9 @@ public class GameDatabaseManager {
 
         return dataSource;
     }
+
+    public boolean doesExist(String name){
+        return playerDao.doesExist(name);
+    }
+
 }
