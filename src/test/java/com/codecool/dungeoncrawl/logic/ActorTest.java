@@ -32,10 +32,10 @@ class ActorTest {
 
     @Test
     void cannotMoveOutOfMap() {
-        Player player = new Player(gameMap.getCell(2, 1));
-        player.move(1, 0);
+        Player player = new Player(gameMap.getCell(0, 1));
+        player.move(0, 0);
 
-        assertEquals(2, player.getX());
+        assertEquals(0, player.getX());
         assertEquals(1, player.getY());
     }
 

@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
     private int level = 1;
@@ -97,6 +98,7 @@ public class Main extends Application {
             exit();
         }
     }
+
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
@@ -116,48 +118,49 @@ public class Main extends Application {
         map.centerPosition();
         refresh();
 
-        if (isPlayerDead(map.getPlayer())){
+        if (isPlayerDead(map.getPlayer())) {
             System.out.println("You lose ---------------------------------------------------");
         }
     }
 
     public void refresh() {
 
-            int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
-            int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
-            int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
-            int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
+        int minX = map.getCenterCell().getX() - CANVAS_WIDTH / 2;
+        int minY = map.getCenterCell().getY() - CANVAS_HEIGHT / 2;
+        int maxX = map.getCenterCell().getX() + CANVAS_WIDTH / 2;
+        int maxY = map.getCenterCell().getY() + CANVAS_HEIGHT / 2;
 
-            context.setFill(Color.BLACK);
-            context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-            for (int x = minX; x < maxX; x++) {
-                for (int y = minY; y < maxY; y++) {
-                    Cell cell = map.getCell(x, y);
-                    if (cell.getActor() != null) {
-                        Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
-                    } else {
-                        Tiles.drawTile(context, cell, x - minX, y - minY);
-                    }
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
+                Cell cell = map.getCell(x, y);
+                if (cell.getActor() != null) {
+                    Tiles.drawTile(context, cell.getActor(), x - minX, y - minY);
+                } else {
+                    Tiles.drawTile(context, cell, x - minX, y - minY);
                 }
             }
-            playerInventory.setText(map.getPlayer().displayInventory());
-            attackStrengthLabel.setText("" + map.getPlayer().getStrength());
-            playerHealthLabel.setText("" + map.getPlayer().getHealth());
+        }
+        playerInventory.setText(map.getPlayer().displayInventory());
+        attackStrengthLabel.setText("" + map.getPlayer().getStrength());
+        playerHealthLabel.setText("" + map.getPlayer().getHealth());
 
         if (isPlayerDead(map.getPlayer())) {
             playerHealthLabel.setText("YOU DIED!");
         }
 //        System.out.println(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR));
 
-        if (map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
+        if (map.getCell(map.getPlayer().getX(), map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
             level += 1;
             setNextMap();
 //        } else if (map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
 //            level -= 1;
 //            setNextMap();
         }
-        }
+    }
+
     private void setNextMap() {
 
         ArrayList inventory = map.getPlayer().getInventory();
@@ -181,8 +184,15 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
+
     }
 
+//    private List<String> addMapPaths() {
+//        List<String> fileNames = new ArrayList<>();
+//        fileNames.add("/map.txt");
+//        fileNames.add("/map2.txt");
+//        return fileNames;
+//}
     private void exit() {
         try {
             stop();
