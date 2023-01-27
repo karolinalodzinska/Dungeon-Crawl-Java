@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -25,15 +26,12 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.sql.SQLException;
-import java.time.LocalTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import static java.time.LocalTime.now;
 
 public class Main extends Application {
     private int currentMap = 1;
 
-    private LocalTime time = now();
     final private int CANVAS_WIDTH = 20;
     final private int CANVAS_HEIGHT = 20;
     GameMap map = new MapLoader().loadMap(currentMap);
@@ -215,22 +213,26 @@ public class Main extends Application {
         cancel.setDefaultButton(true);
         Button saveToSqlBtn = new Button("Save");
         Button saveToFileBtn = new Button("Save to file");
+        setupDbManager();
         saveToSqlBtn.setOnAction((e) -> {
-            map.getPlayer().setName(nameField.getText());
-            if (dbManager.doesExist(nameField.getText())) {
+            Timestamp time = new Timestamp(System.currentTimeMillis());
+            String playerName = nameField.getText();
+            map.getPlayer().setName(playerName);
+            PlayerModel playerModel = new PlayerModel(map.getPlayer());
+            if (dbManager.doesExist(playerName)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Overwrite existing save");
                 alert.setContentText("Would you like to overwrite the already existing state?");
                 ButtonType btnType = alert.showAndWait().orElse(ButtonType.CANCEL);
                 if (btnType == ButtonType.CANCEL) newStage.close();
                 else {
-                    dbManager.updatePlayer(map.getPlayer());
-                    dbManager.updateMap(currentMap, time, map.getPlayer());
+                    dbManager.updatePlayer(playerModel);
+                    dbManager.updateMap(currentMap, time, playerModel);
                     newStage.close();
                 }
             } else {
-                dbManager.savePlayer(map.getPlayer());
-                dbManager.saveMap(currentMap, time, map.getPlayer());
+                dbManager.savePlayer(playerModel);
+                dbManager.saveMap(currentMap, time, playerModel);
                 newStage.close();
             }
         });

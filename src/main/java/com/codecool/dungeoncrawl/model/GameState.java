@@ -1,27 +1,27 @@
 package com.codecool.dungeoncrawl.model;
 
-import java.time.LocalTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameState extends BaseModel {
-    private LocalTime savedAt;
+    private Timestamp savedAt;
     private Integer currentMap;
     private List<String> discoveredMaps = new ArrayList<>();
     private PlayerModel player;
 
-    public GameState(int currentMap, LocalTime savedAt, PlayerModel player) {
+    public GameState(int currentMap, Timestamp savedAt, PlayerModel player) {
         this.currentMap = currentMap;
         this.savedAt = savedAt;
         this.player = player;
     }
 
 
-    public LocalTime getSavedAt() {
+    public Timestamp getSavedAt() {
         return savedAt;
     }
 
-    public void setSavedAt(LocalTime savedAt) {
+    public void setSavedAt(Timestamp savedAt) {
         this.savedAt = savedAt;
     }
 

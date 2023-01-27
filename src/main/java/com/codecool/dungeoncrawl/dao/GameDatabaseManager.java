@@ -1,13 +1,12 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.time.LocalTime;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class GameDatabaseManager {
@@ -20,28 +19,29 @@ public class GameDatabaseManager {
         gameStateDao = new GameStateDaoJdbc(dataSource);
     }
 
-    public void savePlayer(Player player) {
-        PlayerModel model = new PlayerModel(player);
-        playerDao.add(model);
+    public void savePlayer(PlayerModel playerModel) {
+        //PlayerModel model = new PlayerModel(player);
+        playerDao.add(playerModel);
+
     }
 
-    public void updatePlayer( Player player){
-        PlayerModel model = new PlayerModel(player);
-        playerDao.update(model);
+    public void updatePlayer(PlayerModel playerModel){
+        //PlayerModel model = new PlayerModel(player);
+        playerDao.update(playerModel);
     }
 
     public List<PlayerModel> getAllPlayers(){
         return playerDao.getAll();
     }
 
-    public void saveMap(int currentMap, LocalTime time, Player player){
-        PlayerModel playerModel = new PlayerModel(player);
+    public void saveMap(int currentMap, Timestamp time, PlayerModel playerModel){
+        //PlayerModel playerModel = new PlayerModel(player);
         GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.add(gameModel);
     }
 
-    public void updateMap(int currentMap, LocalTime time, Player player){
-        PlayerModel playerModel = new PlayerModel(player);
+    public void updateMap(int currentMap, Timestamp time, PlayerModel playerModel){
+        //PlayerModel playerModel = new PlayerModel(player);
         GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.update(gameModel);
     }

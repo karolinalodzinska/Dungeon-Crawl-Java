@@ -13,14 +13,13 @@ public class Player extends Actor {
 
     private ArrayList<Item> inventory;
     private boolean changeMap = false;
-    public static final int STRENGTH = 5;
-    public static final int HEALTH  = 30;
+    private static final int STRENGTH = 5;
+    private static final int HEALTH  = 30;
     public Player(Cell cell) {
         super(cell, HEALTH);
         this.setStrength(STRENGTH);
         this.inventory = new ArrayList<>();
     }
-
     public Player(Cell cell, String name) {
         super(cell, HEALTH);
         this.name = name;
@@ -81,8 +80,6 @@ public class Player extends Actor {
             }
         }
     }
-
-
 
     public void addToInventory(Item item) {
         inventory.add(item);

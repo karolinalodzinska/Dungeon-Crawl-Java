@@ -18,11 +18,11 @@ public class GameStateDaoJdbc implements GameStateDao {
     @Override
     public void add(GameState state) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO game_state (current_map, saved_at, player_name, player_id) VALUES (?, ?, ?, now())";
+            String sql = "INSERT INTO game_state (current_map, saved_at, player_id) VALUES (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, state.getCurrentMap());
-            statement.setString(2, String.valueOf(state.getSavedAt()));
-            statement.setString(3, state.getPlayer().getPlayerName());
+            statement.setTimestamp(2, state.getSavedAt());
+            statement.setInt(3, state.getPlayer().getId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
@@ -34,10 +34,11 @@ public class GameStateDaoJdbc implements GameStateDao {
     @Override
     public void update(GameState state) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = " UPDATE game_state SET current_map = ?, saved_at = now() WHERE player_name = ?";
+            String sql = " UPDATE game_state SET current_map = ?, saved_at = ? WHERE player_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, (state.getCurrentMap()));
-            statement.setString(2, String.valueOf(state.getSavedAt()));
+            statement.setTimestamp(2, state.getSavedAt());
+            statement.setInt(3, (state.getPlayer().getId()));
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
