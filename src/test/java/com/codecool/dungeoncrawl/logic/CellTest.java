@@ -129,4 +129,27 @@ class CellTest {
         cell.setItem(item);
         assertEquals("item tile", cell.getTileName());
     }
+
+    @Test
+    void getTileName_ItemAndActor_ReturnsActorsTileName(){
+        Cell cell = map.getCell(1, 1);
+
+        Actor actor = new Actor(cell, 1) {
+            @Override
+            public String getTileName() {
+                return "actor tile";
+            }
+        };
+
+        cell.setActor(actor);
+        Item item = new Item(cell) {
+            @Override
+            public String getTileName() {
+                return "item tile";
+            }
+        };
+        cell.setItem(item);
+        assertEquals("actor tile", cell.getTileName());
+    }
+
 }

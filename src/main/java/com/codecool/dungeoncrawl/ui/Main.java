@@ -28,7 +28,6 @@ import javafx.stage.Window;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends Application {
     private int currentMap = 1;
@@ -158,14 +157,10 @@ public class Main extends Application {
         if (isPlayerDead(map.getPlayer())) {
             playerHealthLabel.setText("YOU DIED!");
         }
-//        System.out.println(map.getCell(map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR));
 
         if (map.getCell(map.getPlayer().getX(), map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
             currentMap += 1;
             setNextMap();
-//        } else if (map.getPlayer().getX(),map.getPlayer().getY()).getType().equals(CellType.OPEN_DOOR)) {
-//            level -= 1;
-//            setNextMap();
         }
     }
 

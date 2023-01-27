@@ -85,6 +85,7 @@ public class PlayerDaoJdbc implements PlayerDao {
             throw new RuntimeException("Error while reading author with id: " + e);
         }
     }
+
     public boolean doesExist(String playerName){
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT player_name FROM player WHERE player_name = ?";

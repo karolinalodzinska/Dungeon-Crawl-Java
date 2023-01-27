@@ -10,16 +10,9 @@ class AxeTest {
 
     @Test
     void constructorTestPositive(){
-        Axe axeTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
-        CellType expectedCellType = CellType.FLOOR;
-        assertEquals(expectedCellType, axeTested.getCell().getType());
-    }
-
-    @Test
-    void constructorTestNegative(){
-        Axe axeTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
-        CellType expectedCellType = CellType.WALL;
-        assertNotEquals(expectedCellType, axeTested.getCell().getType());
+        Cell cell = new Cell(map, 1, 1, CellType.FLOOR);
+        Axe axeTested = new Axe(cell);
+        assertEquals(cell, axeTested.getCell());
     }
 
     @Test
@@ -28,9 +21,4 @@ class AxeTest {
         assertEquals("axe", axeTested.getTileName());
     }
 
-    @Test
-    void getTileNameTestNegative(){
-        Axe axeTested = new Axe(new Cell(map, 1, 1, CellType.FLOOR));
-        assertNotEquals("key", axeTested.getTileName());
-    }
 }

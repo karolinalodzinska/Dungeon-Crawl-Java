@@ -20,13 +20,11 @@ public class GameDatabaseManager {
     }
 
     public void savePlayer(PlayerModel playerModel) {
-        //PlayerModel model = new PlayerModel(player);
         playerDao.add(playerModel);
 
     }
 
     public void updatePlayer(PlayerModel playerModel){
-        //PlayerModel model = new PlayerModel(player);
         playerDao.update(playerModel);
     }
 
@@ -35,13 +33,11 @@ public class GameDatabaseManager {
     }
 
     public void saveMap(int currentMap, Timestamp time, PlayerModel playerModel){
-        //PlayerModel playerModel = new PlayerModel(player);
         GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.add(gameModel);
     }
 
     public void updateMap(int currentMap, Timestamp time, PlayerModel playerModel){
-        //PlayerModel playerModel = new PlayerModel(player);
         GameState gameModel = new GameState(currentMap, time, playerModel);
         gameStateDao.update(gameModel);
     }
