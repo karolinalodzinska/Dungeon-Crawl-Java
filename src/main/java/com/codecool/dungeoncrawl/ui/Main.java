@@ -28,6 +28,7 @@ import javafx.stage.Window;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
     private int currentMap = 1;
@@ -191,8 +192,15 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
+
     }
 
+//    private List<String> addMapPaths() {
+//        List<String> fileNames = new ArrayList<>();
+//        fileNames.add("/map.txt");
+//        fileNames.add("/map2.txt");
+//        return fileNames;
+//}
     private void exit() {
         try {
             stop();

@@ -1,8 +1,8 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.logic.Door;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.Door;
 import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.util.ArrayList;
@@ -42,44 +42,48 @@ public class Player extends Actor {
         setHealth(health);
     }
 
-    public boolean getChangeMap() {
-        return changeMap;
-    }
-
-    public void setChangeMap(boolean changeMap) {
-        this.changeMap = changeMap;
-    }
-
+//    public boolean getChangeMap() {
+//        return changeMap;
+//    }
+//
+//    public void setChangeMap(boolean changeMap) {
+//        this.changeMap = changeMap;
+//    }
     public void attemptMove(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
+        Door door = nextCell.getDoor();
 
-        if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() != null){
-            consequenceOfFigthing(nextCell.getActor().getStrength());
-            nextCell.getActor().consequenceOfFigthing(this.getStrength());
-            nextCell.deleteActorIfHealthIsZero();
+        if (nextCell.getType() == CellType.WALL) {
+            return;
+        }
+        if (nextCell.getActor() != null) {
+            tryFight(nextCell);
+            return;
+        }
+        if (nextCell.getType() == CellType.CLOSED_DOOR) {
+            checkIfKeyIsInInventory(nextCell, door);
+        }
 
-        } else if (nextCell.getType() == CellType.FLOOR && nextCell.getActor() == null) {
-            move(dx, dy);
+        move(dx, dy);
+    }
 
-        } else if (nextCell.getType() == CellType.OPEN_DOOR || nextCell.getType() == CellType.CLOSED_DOOR) {
-            Door door = nextCell.getDoor();
-            if (nextCell.getType() == CellType.OPEN_DOOR) {
-                move(dx, dy);
-
-            } else {
-                for (Item item : inventory) {
-                    if (item instanceof Key) {
-                        inventory.remove(item);
-                        door.setOpen(true);
-                        nextCell.setType(CellType.OPEN_DOOR);
-                        move(dx, dy);
-                        return;
-
-                    }
-                }
+    private void checkIfKeyIsInInventory(Cell nextCell, Door door) {
+        for (Item item : inventory) {
+            if (item instanceof Key) {
+                inventory.remove(item);
+                door.setOpen(true);
+                nextCell.setType(CellType.OPEN_DOOR);
+                break;
             }
         }
     }
+
+    private void tryFight(Cell nextCell) {
+        consequenceOfFigthing(nextCell.getActor().getStrength());
+        nextCell.getActor().consequenceOfFigthing(this.getStrength());
+        nextCell.deleteActorIfHealthIsZero();
+    }
+
 
     public void addToInventory(Item item) {
         inventory.add(item);
@@ -87,9 +91,9 @@ public class Player extends Actor {
     public void setInventory(ArrayList inventory) {
         this.inventory = inventory;
     }
-    public void removeFromInventory(Item item) {
+    /*public void removeFromInventory(Item item) {
         inventory.remove(item);
-    }
+    } */
     public ArrayList getInventory() {
         return inventory;
     }
@@ -156,7 +160,7 @@ public class Player extends Actor {
         return display.toString();
     }
 
-    /*public JSONObject serializeToJSON(){
+    /* public JSONObject serializeToJSON(){
         JSONObject jsonObject = new JSONObject();
         Gson gson = new Gson();
         jsonObject.addProperty("name",getName());
@@ -164,7 +168,7 @@ public class Player extends Actor {
         jsonObject.addProperty("x",getX());
         jsonObject.addProperty("y",getY());
         return jsonObject;
-    }*/
+    } */
 
 
 }

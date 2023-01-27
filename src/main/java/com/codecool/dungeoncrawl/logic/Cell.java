@@ -69,7 +69,12 @@ public class Cell implements Drawable {
 
 
     public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+        int x = this.x + dx;
+        int y = this.y + dy;
+        if (x < 0 || x>= gameMap.getWidth() || y <0 || y >= gameMap.getHeight()){
+            return null;
+        }
+        return gameMap.getCell(x, y);
     }
 
     @Override
@@ -98,7 +103,7 @@ public class Cell implements Drawable {
         return door;
     }
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
+//    public GameMap getGameMap() {
+//        return gameMap;
+//    }
 }
