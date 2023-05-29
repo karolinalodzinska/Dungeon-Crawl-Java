@@ -7,4 +7,4 @@ Dungeon Crawl is a roguelike game where players explore tile-based labyrinths, b
 - Java
 
 ## Screenshot
-![dungeon](https://github.com/karolinalodzinska/Dungeon-Crawl-Java/assets/102509808/30e34d61-b49f-4d64-943c-607bceddbd81)
+![dungeon](https://github.com/karolinalodzinska/Dungeon-Crawl-Java/assets/102509808/ca78ddb0-7e60-43d3-8973-403edbfcd0f8)
